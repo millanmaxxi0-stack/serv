@@ -5,7 +5,7 @@
 
 const C2_HOST = window.location.hostname;
 const C2_PORT = window.location.port || 8080;
-const WS_URL  = `ws://${C2_HOST}:${C2_PORT}/ws/controller`;
+const WS_URL = `wss://${C2_HOST}/ws/controller`;
 
 let ws              = null;
 let selectedDevice  = null;
